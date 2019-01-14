@@ -1,16 +1,8 @@
 <?php
 namespace Album;
-
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Zend\Router\Http\Segment;
 
 return [
-    'controllers' => [
-        'factories' => [
-            Controller\AlbumController::class => InvokableFactory::class,
-        ],
-    ],
-
-
     'router' => [
         'routes' => [
             'album' => [
@@ -43,5 +35,5 @@ return [
         'Zend\Validator',
         'Application',
         'Album',    
-    ];
+    ],
 ];
