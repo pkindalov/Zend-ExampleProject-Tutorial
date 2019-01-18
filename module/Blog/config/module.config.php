@@ -7,9 +7,6 @@ use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'controllers' => [
-                        // 'aliases' => [
-                        //     'Controller\ListController' => Controller\ListController::class,
-                        // ],
                         'factories' => [
                             Controller\ListController::class => InvokableFactory::class,
                         ],
@@ -32,29 +29,17 @@ return [
                     'defaults' => [
                         'controller' => Controller\ListController::class,
                         'action' => 'index',
-                    ],   	 
+                    ],       
 
                 ],
             ],
         ],
     ],
 
-
-
-
-
     'view_manager' => [
-        				'template_path_stack' => [
-           											 __DIR__ . '/../view',
-       				  							 ],	
-       				  ],
-    // [
-    //     'Zend\Form',
-    //     'Zend\Db',
-    //     'Zend\Router',
-    //     'Zend\Validator',
-    //     'Application',
-    //     'Blog',    
-    // ],   				  							 			
-
+                        'template_path_stack' => [
+                                                     __DIR__ . '/../view',
+                                                 ], 
+                      ],
+                                        
 ];
