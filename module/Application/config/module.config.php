@@ -90,8 +90,8 @@ return [
             ],
             [
                 'label' => 'Blog',
-                'route' => 'blog'
-            ]
+                'route' => 'blog',  
+            ],
         ],
     ],
 
