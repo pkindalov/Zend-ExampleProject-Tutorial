@@ -54,6 +54,20 @@ return [
                         ],
                     ],
                     
+                    'edit' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/edit/:id',
+                            'defaults' => [
+                                'controller' => Controller\WriteController::class,
+                                'action' => 'edit'
+                            ],
+                            'constraints' => [
+                                'id' => '[1-9]\d*',
+                            ]
+                        ],
+                    ],
+                    
                     'add' => [
                         'type' => Literal::class,
                         'options' => [
