@@ -24,6 +24,7 @@ return [
 //                            Controller\ListController::class => InvokableFactory::class,
                                Controller\ListController::class => Factory\ListControllerFactory::class,
                                Controller\WriteController::class => Factory\WriteControllerFactory::class,
+                               Controller\DeleteController::class => Factory\DeleteControllerFactory::class,
                         ],
 
                     ],
@@ -78,6 +79,20 @@ return [
                         ],
                     ],
                  ],
+                    
+                 'delete' => [
+                    'type' => Segment::class,
+                     'options' => [
+                        'route' => '/delete/:id',
+                         'defaults' => [
+                            'controller' => Controller\DeleteController::class,
+                             'action' => 'delete'
+                         ],
+                         'constraints' => [
+                            'id' => '[1-9]\d*',
+                         ],
+                     ],
+                 ],   
                
                 ],
             ],

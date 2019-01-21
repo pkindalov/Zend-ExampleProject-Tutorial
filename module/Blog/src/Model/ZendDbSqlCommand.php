@@ -88,5 +88,21 @@ class ZendDbSqlCommand implements PostCommandInterface
      */
     public function deletePost(Post $post)
     {
-    }
+            if (! $post->getId()) {
+            throw new RuntimeException('Cannot delete post; missing identifier');
+        }
+
+        $delete = new Delete('posts');
+        $delete->where(['id = ?' => $post->getId()]);
+
+        $sql = new Sql($this->db);
+        $statement = $sql->prepareStatementForSqlObject($delete);
+        $result = $statement->execute();
+
+        if (! $result instanceof ResultInterface) {
+            return false;
+        }
+
+        return true;
+        }
 }
