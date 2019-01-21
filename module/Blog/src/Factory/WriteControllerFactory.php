@@ -7,6 +7,7 @@ use Blog\Form\PostForm;
 use Blog\Model\PostCommandInterface;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
+use Blog\Model\PostRepositoryInterface;
 
 class WriteControllerFactory implements FactoryInterface
 {
@@ -16,12 +17,14 @@ class WriteControllerFactory implements FactoryInterface
      * @param null|array $options
      * @return WriteController
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+   public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $formManager = $container->get('FormElementManager');
+
         return new WriteController(
             $container->get(PostCommandInterface::class),
-            $formManager->get(PostForm::class)
+            $formManager->get(PostForm::class),
+            $container->get(PostRepositoryInterface::class)
         );
     }
 }
