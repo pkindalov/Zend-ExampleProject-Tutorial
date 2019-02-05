@@ -1,6 +1,7 @@
 <?php
 namespace Album;
 use Zend\Router\Http\Segment;
+use Zend\Router\Http\Literal;
 
 return [
     'router' => [
@@ -19,14 +20,41 @@ return [
                     ],
                 ],
             ],
+            
+               'getAlbums' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route' => '/getAlbums',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*'
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\AlbumController::class,
+                        'action'     => 'getAllAlbums',
+                    ],
+                ],
+            ],    
+        
+            
         ],
     ],
     
+    
     'view_manager' => [
         'template_path_stack' => [
-            'album' => __DIR__ . '/../view',
+                 __DIR__ . '/../view',
+                 __DIR__ . '/../../../public' // newLine  
+//            'album' => __DIR__ . '/../view',
+//            __DIR__ . '/../../../public/',
+//            'base_path' => 'zend/public/',
+//            'template_path_stack' => '/../../../public/app/',
+//            'album' => '/../../../public/app/'
         ],
+         'strategies' => [
+                'ViewJsonStrategy'
+         ],
     ],
+    
 
      [
         'Zend\Form',
@@ -38,3 +66,5 @@ return [
         'Blog'    
     ],
 ];
+
+
