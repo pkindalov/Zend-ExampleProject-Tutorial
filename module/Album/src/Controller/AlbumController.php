@@ -7,6 +7,7 @@ use Album\Model\Album;
 use Album\Model\AlbumTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 class AlbumController extends AbstractActionController
 {
@@ -32,7 +33,42 @@ class AlbumController extends AbstractActionController
         // Set the number of items per page to 10:
         $paginator->setItemCountPerPage(10);
 
-        return new ViewModel(['paginator' => $paginator]);
+        $vm = new ViewModel(['paginator' => $paginator]);
+//        var_dump(__DIR__);
+        $template = 'index.phtml';
+        return $this->layout('app/'.$template);
+    }
+    
+    public function getAllAlbumsAction() {
+       
+        
+//       $albums= $this->table->fetchAll(true);
+       $albumsResultSet= $this->table->fetchAllNoPagination(); 
+       $data = [];
+       $jsonData = [
+            'success' => true,
+            'data' => []
+    ];
+//       $json = json_encode($albums);
+       
+        foreach ($albumsResultSet as $row){
+            array_push($jsonData['data'], $row); 
+//            array_push($data, json_encode($row));
+        }
+        
+        
+       
+         
+//       echo($json);
+      
+//        var_dump($albums);
+//        var_dump($albums['arrayObjectPrototype']['returnType']);
+//        
+//        return new \Zend\View\View;
+//        $this->_helper->json($albums);
+        
+//          return new JsonModel($data);
+        return new JsonModel($jsonData);
     }
 
     public function addAction()
@@ -61,6 +97,7 @@ class AlbumController extends AbstractActionController
 
     public function editAction()
     {
+        echo 'we are here';
         $id = (int) $this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
