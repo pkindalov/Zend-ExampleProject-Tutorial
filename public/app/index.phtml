@@ -1,0 +1,51 @@
+<!--<head>
+    <title>Account Manager</title>
+    <link rel="stylesheet" type="text/css" href="/app/ext-4/resources/css/ext-all.css">
+    <script type="text/javascript" src="/app/ext-4/ext-debug.js"></script>
+    <script type="text/javascript" src="/app/app.js"></script>
+</head>-->
+<?= $this->doctype() ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <link rel="stylesheet" type="text/css" href="/app/ext-4/resources/css/ext-all.css">
+            <script type="text/javascript" src="/app/ext-4/ext-debug.js"></script>
+            <script type="text/javascript" src="/app/app.js"></script>
+        <?=
+                $title = 'My albums';
+                $this->headTitle($title);
+        ?>        
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet('/app/ext-4/resources/css/ext-all.css')    
+        ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+//            ->prependFile('/app/ext-4/ext-debug.js')
+//            ->prependFile('/app/app.js')    
+        ?>
+    </head>
+<?php
+
+
+?>
+
+<h1><?= $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?= $this->url('album', ['action' => 'add']) ?>">Add new album</a>
+</p>
+
+<h1>New content here</h1>

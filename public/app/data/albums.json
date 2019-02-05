@@ -1,0 +1,7 @@
+{
+    "success": true,
+    "albums": [
+         {"artist": "Ed",    "title": "ed@sencha.com"},
+         {"artist": "Tommy", "title": "tommy@sencha.com"}
+    ]
+}
