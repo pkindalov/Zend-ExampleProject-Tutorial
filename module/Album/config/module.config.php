@@ -6,6 +6,7 @@ use Zend\Router\Http\Literal;
 return [
     'router' => [
         'routes' => [
+            
             'album' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -21,6 +22,23 @@ return [
                 ],
             ],
             
+            
+             'createEdit' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' => '/createEdit/',
+//                    'constraints' => [
+//                        'id'     => '[0-9]+',
+//                    ],
+                    'defaults' => [
+                        'controller' => Controller\AlbumController::class,
+                        'action'     => 'createEdit',
+                    ],
+                ],
+            ],
+            
+               
+            
                'getAlbums' => [
                 'type'    => Literal::class,
                 'options' => [
@@ -34,6 +52,9 @@ return [
                     ],
                 ],
             ],    
+            
+            
+           
         
             
         ],

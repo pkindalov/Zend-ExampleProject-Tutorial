@@ -7,11 +7,14 @@ Ext.define('AP.view.blogs.Edit', {
     autoShow: true,
 
     initComponent: function() {
-        this.items = [
+        let that = this;
+        items = [
             {
+ 
                 xtype: 'form',
                 items: [
                     {
+      
                         xtype: 'textfield',
                         name : 'title',
                         fieldLabel: 'Title'
@@ -20,23 +23,38 @@ Ext.define('AP.view.blogs.Edit', {
                         xtype: 'textfield',
                         name : 'text',
                         fieldLabel: 'Text'
-                    }
-                ]
-            }
-        ];
-
-        this.buttons = [
+                    },
+                    {
+                    xtype:'buttons',
+                    items:[
+                        //Да преместя actions тук
             {
                 text: 'Save',
-                action: 'save'
+                action: 'save',
+                handler: that.save()
             },
             {
                 text: 'Cancel',
                 scope: this,
                 handler: this.close
             }
+        ]}
+                ]
+            }
         ];
 
+        
+
         this.callParent(arguments);
+        console.log(that.myRecord);
+    },
+    
+    
+    save: function() {
+        let that = this;
+        that.down('form');
+        console.log(that.stor);
+        that.stor.load();
     }
+    
 });

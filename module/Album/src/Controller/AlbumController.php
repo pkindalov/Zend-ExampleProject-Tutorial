@@ -73,6 +73,14 @@ class AlbumController extends AbstractActionController
 
     public function addAction()
     {
+        $jsonData = [
+                'success' => true,
+//                'text' => 'creating new post',
+//                'id' => $id 
+                  
+            ];
+        
+        
         $form = new AlbumForm();
         $form->get('submit')->setValue('Add');
 
@@ -92,12 +100,13 @@ class AlbumController extends AbstractActionController
 
         $album->exchangeArray($form->getData());
         $this->table->saveAlbum($album);
-        return $this->redirect()->toRoute('album');
+        return new JsonModel($jsonData);    
+//        return $this->redirect()->toRoute('album');
     }
 
     public function editAction()
     {
-        echo 'we are here';
+//        echo 'we are here';
         $id = (int) $this->params()->fromRoute('id', 0);
 
         if (0 === $id) {
@@ -162,4 +171,67 @@ class AlbumController extends AbstractActionController
             'album' => $this->table->getAlbum($id),
         ];
     }
+    
+    
+    
+    public function createEditAction(){
+                 
+//        $id = (int)$this->params()->fromRoute('id', 0);
+          $request = $this->getRequest();
+          $id = (int) $request->getPost('id');
+          
+            $jsonData = [
+                'success' => true,
+//                'text' => 'creating new post',
+//                'id' => $id 
+                  
+            ];
+
+        
+        if($id === 0){
+            //if id is false, we must create new record. To put create query here
+            $this->addAction();
+            
+            return new JsonModel($jsonData);
+        }else {
+                 //if the id exists then the edit query must be here.
+              try {
+                $album = $this->table->getAlbum($id);
+            } catch (\Exception $e) {
+                return $this->redirect()->toRoute('album', ['action' => 'index']);
+            }
+
+            $form = new AlbumForm();
+            $form->bind($album);
+            $form->get('submit')->setAttribute('value', 'Edit');
+
+            $request = $this->getRequest();
+            $viewData = ['id' => $id, 'form' => $form];
+
+            if (!$request->isPost()) {
+                return $viewData;
+            }
+
+            $form->setInputFilter($album->getInputFilter());
+            $form->setData($request->getPost());
+
+            if (!$form->isValid()) {
+                return $viewData;
+            }
+
+            $this->table->saveAlbum($album);
+            
+               $jsonData = [
+                'success' => true,
+                'text' => 'editing post'
+            ];
+//
+            return new JsonModel($jsonData);
+
+            // Redirect to album list
+//            return $this->redirect()->toRoute('album', ['action' => 'index']);
+        }
+    }
+    
+    
 }

@@ -12,10 +12,7 @@
             <link rel="stylesheet" type="text/css" href="/app/ext-4/resources/css/ext-all.css">
             <script type="text/javascript" src="/app/ext-4/ext-debug.js"></script>
             <script type="text/javascript" src="/app/app.js"></script>
-        <?=
-                $title = 'My albums';
-                $this->headTitle($title);
-        ?>        
+            
 
         <?= $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -43,9 +40,9 @@
 
 ?>
 
-<h1><?= $this->escapeHtml($title); ?></h1>
+<!--<h1><?= $this->escapeHtml($title); ?></h1>
 <p>
     <a href="<?= $this->url('album', ['action' => 'add']) ?>">Add new album</a>
 </p>
 
-<h1>New content here</h1>
+<h1>New content here</h1>-->

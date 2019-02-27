@@ -4,6 +4,7 @@ Ext.define('AP.view.albums.Edit', {
 
     title: 'Edit Album',
     layout: 'fit',
+    modal: true,
     autoShow: true,
 
     initComponent: function() {
@@ -28,7 +29,10 @@ Ext.define('AP.view.albums.Edit', {
         this.buttons = [
             {
                 text: 'Save',
-                action: 'save'
+                action: 'save',
+                handler: function(button) {
+                    this.fireEvent('albums.save', button);
+                }
             },
             {
                 text: 'Cancel',
@@ -37,7 +41,10 @@ Ext.define('AP.view.albums.Edit', {
             },
             {
                 text: 'Delete',
-                action: 'delete'
+                action: 'delete',
+                handler: function(button, grid){
+                    this.fireEvent('albums.delete', button, grid);
+                }
             }
         ];
 
