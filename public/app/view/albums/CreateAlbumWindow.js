@@ -41,6 +41,7 @@ Ext.define('AP.view.albums.CreateAlbumWindow', {
                     name: 'title',
                     allowBlank: false
                 },
+                
                 {
                     name: 'id',
                     value: '',

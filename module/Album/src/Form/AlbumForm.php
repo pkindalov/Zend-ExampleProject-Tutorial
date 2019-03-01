@@ -21,6 +21,21 @@ class AlbumForm extends Form
                 'label' => 'Title',
             ],
         ]);
+        
+        //new fields here...
+      
+          
+         $this->add([
+            'name' => 'song',
+            'type' => 'text',
+            'option' => [
+                'label' => 'Song Title'
+            ],
+         ]);
+         
+         //end new fields..
+        
+        
         $this->add([
             'name' => 'artist',
             'type' => 'text',

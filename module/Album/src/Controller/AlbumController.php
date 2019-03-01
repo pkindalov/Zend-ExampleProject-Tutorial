@@ -5,18 +5,21 @@ namespace Album\Controller;
 use Album\Form\AlbumForm;
 use Album\Model\Album;
 use Album\Model\AlbumTable;
+use Album\Model\Artist;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+
 
 class AlbumController extends AbstractActionController
 {
 
     private $table;
-
+    
     public function __construct(AlbumTable $table)
     {
         $this->table = $table;
+//
     }
 
     public function indexAction()
@@ -89,18 +92,40 @@ class AlbumController extends AbstractActionController
         if (! $request->isPost()) {
             return ['form' => $form];
         }
+        
+        //new field here
+        $artist = new Artist();
+        
+         //new fields here
+        $form->setInputFilter($artist->getInputFilter());
+        
 
         $album = new Album();
+        
+        
         $form->setInputFilter($album->getInputFilter());
+        
+       
+        
         $form->setData($request->getPost());
+        
+      
+        
 
         if (! $form->isValid()) {
             return ['form' => $form];
         }
-
+        
+        //new field here
+        
+        
         $album->exchangeArray($form->getData());
+        
+        //new field here
+//        $createdArtistId = $this->artistTable->saveArtistAndGetId($artist);
+//        return $createdArtistId;
         $this->table->saveAlbum($album);
-        return new JsonModel($jsonData);    
+        return new JsonModel($jsonData);
 //        return $this->redirect()->toRoute('album');
     }
 

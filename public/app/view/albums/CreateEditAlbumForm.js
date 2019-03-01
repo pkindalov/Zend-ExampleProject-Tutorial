@@ -43,6 +43,12 @@ Ext.define('AP.view.albums.CreateEditAlbumForm', {
                     name: 'title',
                     allowBlank: false
                 },
+                
+                {
+                    fieldLabel: 'Song Title',
+                    name: 'song',
+                    allowBlank: false
+                },
                
                 {
                    xtype: 'grid',
