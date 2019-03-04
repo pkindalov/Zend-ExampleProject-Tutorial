@@ -49,6 +49,18 @@ class ArtistTable
         return $row;
     }
 
+    public function save(Artist $artist) {
+        $result = $this->tableGateway->select(['name' => $artist->name])->current();
+        if (empty($result)) {
+            $this->tableGateway->insert([
+                'name' => $artist->name
+            ]);
+            $artist->id = $this->tableGateway->lastInsertValue;
+        } else {
+            $artist->id = $result->id;
+        }
+    }
+
     public function saveArtist(Artist $artist)
     {
         $data = [
