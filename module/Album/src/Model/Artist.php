@@ -22,7 +22,7 @@ class Artist
     public function exchangeArray(array $data)
     {
         $this->id     = !empty($data['id']) ? $data['id'] : null;
-        $this->name = !empty($data['artist']) ? $data['artist'] : null;
+        $this->name   = !empty($data['name']) ? $data['name'] : null;
     }
 
 
