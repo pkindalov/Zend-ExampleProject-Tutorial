@@ -16,4 +16,10 @@ return [
         'driver' => 'PDO',
         'dsn'    => sprintf('mysql:host=localhost;port=3306;dbname=yourDbBase', 'user', 'password'),
     ],
+
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter'
+            => 'Zend\Db\Adapter\AdapterServiceFactory',
+        )),
 ];
