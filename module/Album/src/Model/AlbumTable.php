@@ -48,7 +48,11 @@ class AlbumTable
 
         return $row;
     }
+    public function save(Album $album)
+    {
+        $this->tableGateway->insert($album->getArrayCopy());
 
+    }
     public function saveAlbum(Album $album)
     {
         $data = [

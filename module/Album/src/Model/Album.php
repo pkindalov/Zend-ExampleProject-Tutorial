@@ -14,15 +14,17 @@ use Zend\Validator\StringLength;
 class Album
 {
     public $id;
-    public $artist;
     public $title;
+    public $artist_id;
+    public $song_id;
 
     private $inputFilter;
 
     public function exchangeArray(array $data)
     {
         $this->id     = !empty($data['id']) ? $data['id'] : null;
-        $this->artist = !empty($data['artist']) ? $data['artist'] : null;
+        $this->artist_id = !empty($data['artist_id']) ? $data['artist_id'] : null;
+        $this->song_id = !empty($data['song_id']) ? $data['song_id'] : null;
         $this->title  = !empty($data['title']) ? $data['title'] : null;
     }
 
@@ -31,7 +33,8 @@ class Album
     {
         return [
             'id'     => $this->id,
-            'artist' => $this->artist,
+            'song_id' => $this->song_id,
+            'artist_id' => $this->artist_id,
             'title'  => $this->title,
         ];
     }
