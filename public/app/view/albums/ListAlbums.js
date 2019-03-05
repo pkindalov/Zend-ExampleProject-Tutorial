@@ -24,7 +24,8 @@ Ext.define('AP.view.albums.ListAlbums', {
         var store =  Ext.create('Ext.data.Store', {
             storeId: 'albumsStore',
             
-            fields: ['id', 'artist', 'title'],
+            // fields: ['id', 'artist', 'title'],
+            fields: ['id', 'title', 'song.title', 'name'],
             autoLoad: false,
             
              proxy: {
@@ -49,8 +50,10 @@ Ext.define('AP.view.albums.ListAlbums', {
           
         this.columns = [
             {header: 'Id', dataIndex: 'id', flex: 0},
-            {header: 'Artist',  dataIndex: 'artist',  flex: 1},
-            {header: 'Title', dataIndex: 'title', flex: 1}
+            // {header: 'Artist',  dataIndex: 'artist',  flex: 1},
+            {header: 'Song',  dataIndex: 'title',  flex: 1},
+            {header: 'Title', dataIndex: 'title', flex: 1},
+            {header: 'Artist', dataIndex: 'name', flex: 1},
         ];
         
         

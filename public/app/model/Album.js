@@ -1,6 +1,6 @@
 Ext.define('AP.model.Album', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'artist', 'title'],
+    fields: ['id', 'name', 'title'],
     
 //    proxy: {
 //        type: 'rest',
