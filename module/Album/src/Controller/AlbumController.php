@@ -22,6 +22,7 @@ class AlbumController extends AbstractActionController
     private $artistTable;
     private $albumModel;
 
+
     public function __construct(AlbumTable $table, AlbumModel $albumModel)
     {
         $this->table = $table;
@@ -54,7 +55,8 @@ class AlbumController extends AbstractActionController
        
         
 //       $albums= $this->table->fetchAll(true);
-       $albumsResultSet= $this->table->fetchAllNoPagination(); 
+       $albumsResultSet= $this->table->fetchAllNoPagination();
+
        $data = [];
        $jsonData = [
             'success' => true,

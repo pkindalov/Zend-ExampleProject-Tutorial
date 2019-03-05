@@ -7,14 +7,25 @@ use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGatewayInterface;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
+use Zend\Db\Adapter\Adapter;
+
+use Zend\Db\Adapter\Driver\ResultInterface;
+
 
 class AlbumTable
 {
     private $tableGateway;
+    private $adapter;
 
     public function __construct(TableGatewayInterface $tableGateway)
     {
         $this->tableGateway = $tableGateway;
+        $this->adapter = new Adapter([
+            'driver'   => 'Pdo_Mysql',
+            'database' => 'zf3tutorial',
+            'username' => 'root',
+            'password' => ''
+        ]);
     }
 
     public function fetchAll($paginated = false)
@@ -30,7 +41,64 @@ class AlbumTable
     
     
     public function fetchAllNoPagination() {
-         return $this->tableGateway->select();
+
+//         return $this->tableGateway->select();
+        $sql = "SELECT album.id, album.title, songs.title, artist.name FROM album INNER JOIN artist ON album.artist_id = artist.id INNER JOIN songs ON album.song_id = songs.id;";
+        $statement = $this->adapter->createStatement($sql);
+        $statement->prepare();
+        $result = $statement->execute();
+        return $result;
+
+
+//        $sql = "SELECT * FROM album INNER JOIN artist ON album.artist_id = artist_id";
+//        $statement = $sql->prepareStatementForSqlObject($this->tableGateway->select());
+//        $result = $statement->execute();
+//        return $result;
+        
+
+
+//            return $this->tableGateway->select()
+//            ->from(array('a' => 'album'),
+//                array('id', 'title'))
+//            ->join(array('art' => 'artist'),
+//                'a.artist_id = art.id')->toArray();
+
+//        $adapter = $this->tableGateway->getAdapter();
+//        $sql = new Sql($adapter);
+//
+//        $select = $sql->select() ;
+//        $select -> from ('Album')
+//            -> join ( 'artist' , 'album.artist_id= artist_id');
+//
+//        $statement = $sql->prepareStatementForSqlObject($select);
+//        return $statement->execute();
+
+
+//        $sql = "SELECT * FROM album INNER JOIN artist ON album.artist_id = artist_id";
+//        $statement = $sql->prepareStatementForSqlObject($this->tableGateway->select());
+//        $result = $statement->execute();
+//        return $result;
+
+//        $album = 'album';
+//        return $this->tableGateway->select(function (Select $select)  {
+//              $select->columns(['id', 'title', 'song_id', 'artist_id']);
+//              $select->join('artist', 'album.artist_id = artist_id', ['id', 'name']);
+////              $select->where('album.artist_id = artist_id');
+////              $select->from('album', ['id', 'title'])
+////                     ->joinInner('artist', 'album.artist_id = artist_id', ['id', 'name']);
+//
+//        })->toArray();
+
+//         $sql = "SELECT * FROM album INNER JOIN artist ON album.artist_id = artist_id";
+//         $query_result = $this->adapter->query($sql);
+
+//         return $query_result;
+
+
+//         return $this->tableGateway->select()
+//                                   ->from('album', ['id', 'title'])
+//                                   ->joinInner('artist', 'album.artist_id = artist_id', ['id', 'name']);
+
     }
 
 
