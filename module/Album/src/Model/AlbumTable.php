@@ -41,9 +41,9 @@ class AlbumTable
     
     
     public function fetchAllNoPagination() {
-
+       
 //         return $this->tableGateway->select();
-        $sql = "SELECT album.id, album.title, songs.title, artist.name FROM album INNER JOIN artist ON album.artist_id = artist.id INNER JOIN songs ON album.song_id = songs.id;";
+        $sql = "SELECT album.id, album.title, songs.title AS song, artist.name FROM album INNER JOIN artist ON album.artist_id = artist.id INNER JOIN songs ON album.song_id = songs.id";
         $statement = $this->adapter->createStatement($sql);
         $statement->prepare();
         $result = $statement->execute();

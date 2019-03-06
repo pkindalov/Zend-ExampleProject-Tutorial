@@ -36,7 +36,7 @@ Ext.define('AP.view.albums.CreateEditAlbumForm', {
             defaultType: 'textfield',
             items: [{
                     fieldLabel: 'Artist',
-                    name: 'name',
+                    name: 'artist',
                     allowBlank: false
                 }, {
                     fieldLabel: 'Title Of Album',
@@ -46,16 +46,17 @@ Ext.define('AP.view.albums.CreateEditAlbumForm', {
                 
                 {
                     fieldLabel: 'Song Title',
-                    name: 'title',
+                    name: 'song',
                     allowBlank: false
                 },
 
                 {
                    xtype: 'grid',
                    title: 'Songs',
+                   storeId: 'albumStore',
                    columns: [
                        {
-                       header: 'Songs', dataIndex: 'title'
+                       header: 'Songs', dataIndex: 'song'
                         }
                    ]
                 },
