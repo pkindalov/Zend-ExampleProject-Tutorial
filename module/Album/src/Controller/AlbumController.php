@@ -9,6 +9,7 @@ use Album\Model\Artist;
 use Album\Model\AlbumModel;
 
 
+use Album\Model\Song;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -20,6 +21,7 @@ class AlbumController extends AbstractActionController
     private $table;
     private $sm;
     private $artistTable;
+    private $songTable;
     private $albumModel;
 
 
@@ -33,7 +35,7 @@ class AlbumController extends AbstractActionController
 
     public function indexAction()
     {
-    // Grab the paginator from the AlbumTable:
+        // Grab the paginator from the AlbumTable:
         $paginator = $this->table->fetchAll(true);
 
         // Set the current page to what has been passed in query string,
@@ -50,36 +52,38 @@ class AlbumController extends AbstractActionController
         $template = 'index.phtml';
         return $this->layout('app/'.$template);
     }
-    
-    public function getAllAlbumsAction() {
-       
-        
-//       $albums= $this->table->fetchAll(true);
-       $albumsResultSet= $this->table->fetchAllNoPagination();
 
-       $data = [];
-       $jsonData = [
+    public function getAllAlbumsAction() {
+
+
+//       $albums= $this->table->fetchAll(true);
+        $albumsResultSet= $this->table->fetchAllNoPagination();
+
+//        var_dump($albumsResultSet);
+
+        $data = [];
+        $jsonData = [
             'success' => true,
             'data' => []
-    ];
+        ];
 //       $json = json_encode($albums);
-       
+
         foreach ($albumsResultSet as $row){
-            array_push($jsonData['data'], $row); 
+            array_push($jsonData['data'], $row);
 //            array_push($data, json_encode($row));
         }
-        
-        
-       
-         
+
+
+
+
 //       echo($json);
-      
+
 //        var_dump($albums);
 //        var_dump($albums['arrayObjectPrototype']['returnType']);
-//        
+//
 //        return new \Zend\View\View;
 //        $this->_helper->json($albums);
-        
+
 //          return new JsonModel($data);
         return new JsonModel($jsonData);
     }
@@ -87,57 +91,68 @@ class AlbumController extends AbstractActionController
     public function addAction()
     {
         $jsonData = [
-                'success' => true,
+            'success' => true,
 //                'text' => 'creating new post',
-//                'id' => $id 
-                  
-            ];
-        
-        
+//                'id' => $id
+
+        ];
+
+
+
         $form = new AlbumForm();
         $form->get('submit')->setValue('Add');
 
         $request = $this->getRequest();
 
+//        var_dump($request->getPost());
+//        exit;
+
         if (! $request->isPost()) {
             return ['form' => $form];
         }
-        
+
+
         //new field here
         $artist = new Artist();
-        
-         //new fields here
+        $song = new Song();
+
+        //new fields here
         $form->setInputFilter($artist->getInputFilter());
-        
+//        $form->setInputFilter($song->getInputFilter());
 
 //        $album = new Album();
-        
-        
+
+
 //        $form->setInputFilter($album->getInputFilter());
-        
-       
-        
+
+
         $form->setData($request->getPost());
-        
-      
-        
+
+
+
 
         if (! $form->isValid()) {
             return ['form' => $form];
         }
 
+//        $song->setTitle($form->getData());
+
+
+
         $this->albumModel->save($form->getData());
 
         //new field here
-        
-        
+
+
 //        $album->exchangeArray($form->getData());
-        
+
         //new field here
 //        $createdArtistId = $this->table->saveArtistAndGetId($artist);
         $createdArtistId = $this->artistTable->saveArtistAndGetId($artist);
+        $createdSongId = $this->songTable->saveSongAndGetId($song);
 
-        return $createdArtistId;
+//        return $createdArtistId;
+        return $createdSongId;
 //        $this->table->saveAlbum($album);
 //        return new JsonModel($jsonData);
 //        return $this->redirect()->toRoute('album');
@@ -187,7 +202,7 @@ class AlbumController extends AbstractActionController
 
     public function deleteAction()
     {
-         $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('album');
         }
@@ -210,31 +225,31 @@ class AlbumController extends AbstractActionController
             'album' => $this->table->getAlbum($id),
         ];
     }
-    
-    
-    
-    public function createEditAction(){
-                 
-//        $id = (int)$this->params()->fromRoute('id', 0);
-          $request = $this->getRequest();
-          $id = (int) $request->getPost('id');
-          
-            $jsonData = [
-                'success' => true,
-//                'text' => 'creating new post',
-//                'id' => $id 
-                  
-            ];
 
-        
+
+
+    public function createEditAction(){
+
+//        $id = (int)$this->params()->fromRoute('id', 0);
+        $request = $this->getRequest();
+        $id = (int) $request->getPost('id');
+
+        $jsonData = [
+            'success' => true,
+//                'text' => 'creating new post',
+//                'id' => $id
+
+        ];
+
+
         if($id === 0){
             //if id is false, we must create new record. To put create query here
             $this->addAction();
-            
+
             return new JsonModel($jsonData);
         }else {
-                 //if the id exists then the edit query must be here.
-              try {
+            //if the id exists then the edit query must be here.
+            try {
                 $album = $this->table->getAlbum($id);
             } catch (\Exception $e) {
                 return $this->redirect()->toRoute('album', ['action' => 'index']);
@@ -259,8 +274,8 @@ class AlbumController extends AbstractActionController
             }
 
             $this->table->saveAlbum($album);
-            
-               $jsonData = [
+
+            $jsonData = [
                 'success' => true,
                 'text' => 'editing post'
             ];
@@ -271,6 +286,6 @@ class AlbumController extends AbstractActionController
 //            return $this->redirect()->toRoute('album', ['action' => 'index']);
         }
     }
-    
-    
+
+
 }
